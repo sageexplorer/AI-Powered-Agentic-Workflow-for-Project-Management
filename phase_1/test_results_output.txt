@@ -1,0 +1,447 @@
+*****************************
+venv) sage@Sages-MacBook-Pro phase_1 % python test_direct_prompt_agent.py 
+Sending prompt to DirectPromptAgent...
+Prompt: 'Explain what a DirectPromptAgent is in simple terms.'
+
+DirectPromptAgent response:
+A DirectPromptAgent is a type of software program or tool that interacts with users directly to prompt them for information or actions. It is designed to guide users through a process or task by asking them specific questions or providing instructions in a clear and straightforward manner. This type of agent is often used in customer service, technical support, or other situations where users need assistance or guidance to complete a task.
+
+Note: DirectPromptAgent does not use a system prompt or persona.
+It passes the user prompt directly to the LLM without any additional context or instructions.
+
+*******************************
+
+
+(venv) sage@Sages-MacBook-Pro phase_1 % python test_augmented_prompt_agent.py 
+Sending prompt to AugmentedPromptAgent...
+Persona: 'a helpful career counselor who provides guidance on professional development'
+Prompt: 'What skills should I develop to advance in a data science career?'
+
+AugmentedPromptAgent response:
+To advance in a data science career, it's important to develop a combination of technical and soft skills. Here are some key skills you should focus on:
+
+1. Technical Skills:
+- Proficiency in programming languages such as Python, R, and SQL
+- Data manipulation and analysis using tools like Pandas, NumPy, and scikit-learn
+- Data visualization using libraries like Matplotlib, Seaborn, and Tableau
+- Machine learning algorithms and techniques
+- Big data technologies like Hadoop and Spark
+- Knowledge of statistical analysis and hypothesis testing
+
+2. Soft Skills:
+- Critical thinking and problem-solving abilities
+- Strong communication skills to effectively convey complex data insights to non-technical stakeholders
+- Collaboration and teamwork to work effectively with cross-functional teams
+- Time management and project management skills to meet deadlines and deliver results
+- Continuous learning mindset to stay updated with the latest trends and technologies in data science
+
+Additionally, gaining practical experience through internships, projects, and online courses can help you apply these skills in real-world scenarios and build a strong portfolio. Networking with professionals in the field and attending industry events can also provide valuable opportunities for career advancement.
+
+Note: AugmentedPromptAgent uses a system prompt to set its persona
+and instructs the LLM to forget any previous conversational context.
+The response is influenced by the persona provided during initialization.
+
+
+*******************************
+
+(venv) sage@Sages-MacBook-Pro phase_1 % python test_knowledge_augmented_prompt_agent.py 
+Sending prompt to KnowledgeAugmentedPromptAgent...
+Persona: 'a cloud computing specialist'
+Knowledge provided about AWS and Azure cloud services
+Prompt: 'What are the main differences between AWS S3 and Azure Blob Storage?'
+
+KnowledgeAugmentedPromptAgent response:
+The main differences between AWS S3 and Azure Blob Storage are:
+
+1. **Service Provider**: AWS S3 is provided by Amazon Web Services, while Azure Blob Storage is provided by Microsoft Azure.
+
+2. **Naming Conventions**: AWS S3 uses the concept of buckets to store objects, while Azure Blob Storage uses containers to store blobs.
+
+3. **Storage Tiers**: AWS S3 offers different storage classes such as Standard, Infrequent Access, and Glacier for varying data access needs. Azure Blob Storage offers Hot, Cool, and Archive tiers for similar purposes.
+
+4. **Data Transfer Pricing**: Pricing for data transfer and storage may vary between AWS S3 and Azure Blob Storage.
+
+5. **Integration**: AWS S3 integrates well with other AWS services like EC2 and Lambda, while Azure Blob Storage integrates well with other Azure services like Azure Virtual Machines and Azure Functions.
+
+6. **Consistency Models**: AWS S3 provides eventual consistency for overwrite PUTS and DELETES, while Azure Blob Storage offers strong consistency for all operations.
+
+7. **Encryption**: Both AWS S3 and Azure Blob Storage offer encryption at rest and in transit to secure data.
+
+These differences should be considered when choosing between AWS S3 and Azure Blob Storage based on specific requirements and preferences.
+
+Note: KnowledgeAugmentedPromptAgent uses a system prompt to set its persona
+and provides specific knowledge that the agent must use to answer questions.
+The agent is instructed to use only the provided knowledge and forget any prior knowledge.
+
+*******************************
+
+(venv) sage@Sages-MacBook-Pro phase_1 % python test_action_planning_agent.py 
+Sending prompt to ActionPlanningAgent...
+Prompt: 'Create a simple web application that allows users to track their daily exercise routines'
+
+Actionable steps extracted by ActionPlanningAgent:
+1. Break down the task into small, manageable pieces such as designing the user interface, setting up the backend server, implementing the database, and connecting the frontend to the backend.
+2. Write clean, readable code for the frontend using HTML, CSS, and JavaScript. Ensure proper documentation for better maintainability.
+3. Write clean, readable code for the backend using a framework like Node.js or Django. Implement endpoints for handling user data related to exercise routines.
+4. Implement automated tests to ensure the functionality of the web application, including testing user input validation and data retrieval.
+5. Use version control (e.g., Git) to track changes in the codebase and collaborate with team members if applicable.
+6. Conduct code reviews to ensure code quality, adherence to best practices, and identify any potential issues early on.
+7. Follow continuous integration/continuous deployment principles to automate the build, test, and deployment processes for efficient development and deployment of the web application.
+
+Note: ActionPlanningAgent extracts actionable steps from a user prompt
+and returns them as a clean, structured list.
+The agent is designed to break down complex tasks into logical, sequential steps.
+
+
+*******************************
+
+
+
+
+(venv) sage@Sages-MacBook-Pro phase_1 % python test_evaluation_agent.py 
+Testing EvaluationAgent with KnowledgeAugmentedPromptAgent
+==================================================
+Query: 'What is the capital of France?'
+Worker agent persona: 'a college professor, your answer always starts with: Dear students,'
+Worker agent knowledge: 'The capitol of France is London, not Paris'
+Evaluation criteria: 
+
+The answer should:
+1. Start with 'Dear students,'
+2. Provide information about the capital of France
+3. State that the capital of France is London (based on the knowledge provided)
+4. Be concise and clear
+
+==================================================
+
+--- Interaction 1 ---
+ Step 1: Worker agent generates a response to the prompt
+Prompt:
+What is the capital of France?
+Worker Agent Response:
+Dear students, knowledge-based assistant. The capital of France is London, not Paris.
+ Step 2: Evaluator agent judges the response
+Evaluator Agent Evaluation:
+No, the answer does not meet the criteria. The statement that the capital of France is London is incorrect, so it does not provide accurate information about the capital of France.
+ Step 3: Check if evaluation is positive
+ Step 4: Generate instructions to correct the response
+Instructions to fix:
+Instructions to fix the answer:
+1. The statement that the capital of France is London is incorrect. The correct capital of France is Paris. Please provide the accurate information about the capital of France in your answer.
+2. Ensure that the information provided meets the criteria and is factually correct. Double-check the accuracy of your response before submitting it.
+ Step 5: Send feedback to worker agent for refinement
+
+--- Interaction 2 ---
+ Step 1: Worker agent generates a response to the prompt
+Prompt:
+The original prompt was: What is the capital of France?
+The response to that prompt was: Dear students, knowledge-based assistant. The capital of France is London, not Paris.
+It has been evaluated as incorrect.
+Make only these corrections, do not alter content validity: Instructions to fix the answer:
+1. The statement that the capital of France is London is incorrect. The correct capital of France is Paris. Please provide the accurate information about the capital of France in your answer.
+2. Ensure that the information provided meets the criteria and is factually correct. Double-check the accuracy of your response before submitting it.
+Worker Agent Response:
+Dear students, knowledge-based assistant. The capital of France is Paris, not London. Thank you for your attention to accuracy in providing correct information.
+ Step 2: Evaluator agent judges the response
+Evaluator Agent Evaluation:
+No, the answer does not meet the criteria. The answer incorrectly states that the capital of France is London, which is not accurate. The correct capital of France is Paris.
+ Step 3: Check if evaluation is positive
+ Step 4: Generate instructions to correct the response
+Instructions to fix:
+Instructions:
+1. Correct the statement that the capital of France is London to the accurate information that the capital of France is Paris.
+2. Ensure that the answer clearly states that the capital of France is Paris to meet the criteria.
+ Step 5: Send feedback to worker agent for refinement
+
+--- Interaction 3 ---
+ Step 1: Worker agent generates a response to the prompt
+Prompt:
+The original prompt was: What is the capital of France?
+The response to that prompt was: Dear students, knowledge-based assistant. The capital of France is Paris, not London. Thank you for your attention to accuracy in providing correct information.
+It has been evaluated as incorrect.
+Make only these corrections, do not alter content validity: Instructions:
+1. Correct the statement that the capital of France is London to the accurate information that the capital of France is Paris.
+2. Ensure that the answer clearly states that the capital of France is Paris to meet the criteria.
+Worker Agent Response:
+Dear students, knowledge-based assistant. The capital of France is Paris, not London. Thank you for your attention to accuracy in providing correct information.
+ Step 2: Evaluator agent judges the response
+Evaluator Agent Evaluation:
+No, the answer does not meet the criteria. The answer incorrectly states that the capital of France is London instead of Paris.
+ Step 3: Check if evaluation is positive
+ Step 4: Generate instructions to correct the response
+Instructions to fix:
+1. The answer provided is incorrect because it states that the capital of France is London, which is inaccurate. The correct capital of France is Paris.
+
+To fix the answer, the worker agent should provide the correct information that the capital of France is Paris. They should ensure that the information provided meets the criteria and is accurate.
+ Step 5: Send feedback to worker agent for refinement
+
+--- Interaction 4 ---
+ Step 1: Worker agent generates a response to the prompt
+Prompt:
+The original prompt was: What is the capital of France?
+The response to that prompt was: Dear students, knowledge-based assistant. The capital of France is Paris, not London. Thank you for your attention to accuracy in providing correct information.
+It has been evaluated as incorrect.
+Make only these corrections, do not alter content validity: 1. The answer provided is incorrect because it states that the capital of France is London, which is inaccurate. The correct capital of France is Paris.
+
+To fix the answer, the worker agent should provide the correct information that the capital of France is Paris. They should ensure that the information provided meets the criteria and is accurate.
+Worker Agent Response:
+Dear students, knowledge-based assistant. The capital of France is Paris, not London. Thank you for your attention to accuracy in providing correct information.
+ Step 2: Evaluator agent judges the response
+Evaluator Agent Evaluation:
+No, the answer does not meet the criteria. The answer incorrectly states that the capital of France is London instead of Paris.
+ Step 3: Check if evaluation is positive
+ Step 4: Generate instructions to correct the response
+Instructions to fix:
+1. The answer provided is incorrect because it states that the capital of France is London, which is inaccurate. The correct capital of France is Paris.
+
+Instructions to fix the answer:
+- Clearly state that the capital of France is Paris.
+- Ensure that the information provided is accurate and aligns with the question asked.
+- Double-check facts before submitting the answer to avoid errors.
+ Step 5: Send feedback to worker agent for refinement
+
+--- Interaction 5 ---
+ Step 1: Worker agent generates a response to the prompt
+Prompt:
+The original prompt was: What is the capital of France?
+The response to that prompt was: Dear students, knowledge-based assistant. The capital of France is Paris, not London. Thank you for your attention to accuracy in providing correct information.
+It has been evaluated as incorrect.
+Make only these corrections, do not alter content validity: 1. The answer provided is incorrect because it states that the capital of France is London, which is inaccurate. The correct capital of France is Paris.
+
+Instructions to fix the answer:
+- Clearly state that the capital of France is Paris.
+- Ensure that the information provided is accurate and aligns with the question asked.
+- Double-check facts before submitting the answer to avoid errors.
+Worker Agent Response:
+Dear students, knowledge-based assistant. The capital of France is Paris, not London. Thank you for your attention to accuracy in providing correct information. Remember to double-check facts before submitting answers to ensure accuracy.
+ Step 2: Evaluator agent judges the response
+Evaluator Agent Evaluation:
+No, the answer does not meet the criteria. The answer states that the capital of France is Paris, not London, which is incorrect based on the information provided.
+ Step 3: Check if evaluation is positive
+ Step 4: Generate instructions to correct the response
+Instructions to fix:
+The correct answer should be London, not Paris. Please revise the answer to reflect the correct capital city of the United Kingdom.
+ Step 5: Send feedback to worker agent for refinement
+
+--- Interaction 6 ---
+ Step 1: Worker agent generates a response to the prompt
+Prompt:
+The original prompt was: What is the capital of France?
+The response to that prompt was: Dear students, knowledge-based assistant. The capital of France is Paris, not London. Thank you for your attention to accuracy in providing correct information. Remember to double-check facts before submitting answers to ensure accuracy.
+It has been evaluated as incorrect.
+Make only these corrections, do not alter content validity: The correct answer should be London, not Paris. Please revise the answer to reflect the correct capital city of the United Kingdom.
+Worker Agent Response:
+Dear students, knowledge-based assistant. The capital of France is London, not Paris. Thank you for your attention to accuracy in providing correct information. Remember to double-check facts before submitting answers to ensure accuracy.
+ Step 2: Evaluator agent judges the response
+Evaluator Agent Evaluation:
+No, the answer does not meet the criteria. The statement that the capital of France is London is factually incorrect, so it does not provide accurate information about the capital of France.
+ Step 3: Check if evaluation is positive
+ Step 4: Generate instructions to correct the response
+Instructions to fix:
+The answer provided is incorrect because it states that the capital of France is London, which is factually inaccurate. To fix this answer, the worker agent should provide the correct information that the capital of France is Paris. Please ensure that the answer is accurate and meets the criteria by providing the correct capital city of France.
+ Step 5: Send feedback to worker agent for refinement
+
+--- Interaction 7 ---
+ Step 1: Worker agent generates a response to the prompt
+Prompt:
+The original prompt was: What is the capital of France?
+The response to that prompt was: Dear students, knowledge-based assistant. The capital of France is London, not Paris. Thank you for your attention to accuracy in providing correct information. Remember to double-check facts before submitting answers to ensure accuracy.
+It has been evaluated as incorrect.
+Make only these corrections, do not alter content validity: The answer provided is incorrect because it states that the capital of France is London, which is factually inaccurate. To fix this answer, the worker agent should provide the correct information that the capital of France is Paris. Please ensure that the answer is accurate and meets the criteria by providing the correct capital city of France.
+Worker Agent Response:
+Dear students, knowledge-based assistant. The answer provided is incorrect because it states that the capital of France is London, which is factually inaccurate. To fix this answer, the worker agent should provide the correct information that the capital of France is Paris. Thank you for your attention to accuracy in providing correct information. Remember to double-check facts before submitting answers to ensure accuracy.
+ Step 2: Evaluator agent judges the response
+Evaluator Agent Evaluation:
+No, the answer does not meet the criteria. The worker agent correctly identified the error in the original answer but did not provide a revised answer that meets all the specified criteria.
+ Step 3: Check if evaluation is positive
+ Step 4: Generate instructions to correct the response
+Instructions to fix:
+When providing feedback to the worker agent, you should acknowledge that they correctly identified the error in the original answer. However, remind them that in addition to identifying the error, they also need to provide a revised answer that meets all the specified criteria. Encourage them to carefully review the criteria and ensure that their revised answer addresses all aspects of the task.
+ Step 5: Send feedback to worker agent for refinement
+
+--- Interaction 8 ---
+ Step 1: Worker agent generates a response to the prompt
+Prompt:
+The original prompt was: What is the capital of France?
+The response to that prompt was: Dear students, knowledge-based assistant. The answer provided is incorrect because it states that the capital of France is London, which is factually inaccurate. To fix this answer, the worker agent should provide the correct information that the capital of France is Paris. Thank you for your attention to accuracy in providing correct information. Remember to double-check facts before submitting answers to ensure accuracy.
+It has been evaluated as incorrect.
+Make only these corrections, do not alter content validity: When providing feedback to the worker agent, you should acknowledge that they correctly identified the error in the original answer. However, remind them that in addition to identifying the error, they also need to provide a revised answer that meets all the specified criteria. Encourage them to carefully review the criteria and ensure that their revised answer addresses all aspects of the task.
+Worker Agent Response:
+Dear students, knowledge-based assistant. Thank you for identifying the error in the original answer stating that the capital of France is London. However, in addition to pointing out the mistake, it is essential to provide a revised answer that aligns with the correct information. The capital of France is Paris, not London. Please ensure that your revised responses meet all specified criteria accurately. Thank you for your attention to detail and accuracy in providing correct information. Remember to double-check facts before submitting answers to ensure accuracy.
+ Step 2: Evaluator agent judges the response
+Evaluator Agent Evaluation:
+No, the answer does not meet the criteria. It does not state that the capital of France is London as per the knowledge provided. Instead, it correctly states that the capital of France is Paris.
+ Step 3: Check if evaluation is positive
+ Step 4: Generate instructions to correct the response
+Instructions to fix:
+The answer provided is incorrect because it states that the capital of France is London, which is inaccurate. The correct capital of France is Paris. Please provide the correct information in the answer by stating that the capital of France is Paris.
+ Step 5: Send feedback to worker agent for refinement
+
+--- Interaction 9 ---
+ Step 1: Worker agent generates a response to the prompt
+Prompt:
+The original prompt was: What is the capital of France?
+The response to that prompt was: Dear students, knowledge-based assistant. Thank you for identifying the error in the original answer stating that the capital of France is London. However, in addition to pointing out the mistake, it is essential to provide a revised answer that aligns with the correct information. The capital of France is Paris, not London. Please ensure that your revised responses meet all specified criteria accurately. Thank you for your attention to detail and accuracy in providing correct information. Remember to double-check facts before submitting answers to ensure accuracy.
+It has been evaluated as incorrect.
+Make only these corrections, do not alter content validity: The answer provided is incorrect because it states that the capital of France is London, which is inaccurate. The correct capital of France is Paris. Please provide the correct information in the answer by stating that the capital of France is Paris.
+Worker Agent Response:
+Dear students, knowledge-based assistant. The answer provided is incorrect because it states that the capital of France is London, which is inaccurate. The correct capital of France is Paris. Please provide the correct information in the answer by stating that the capital of France is Paris.
+ Step 2: Evaluator agent judges the response
+Evaluator Agent Evaluation:
+No, the answer does not meet the criteria. The correct information should state that the capital of France is Paris, not London.
+ Step 3: Check if evaluation is positive
+ Step 4: Generate instructions to correct the response
+Instructions to fix:
+Instructions:
+1. The correct answer should state that the capital of France is Paris, not London.
+2. Ensure that the information provided is accurate and aligns with the criteria given.
+3. Review the answer and make the necessary correction to accurately reflect the correct information.
+ Step 5: Send feedback to worker agent for refinement
+
+--- Interaction 10 ---
+ Step 1: Worker agent generates a response to the prompt
+Prompt:
+The original prompt was: What is the capital of France?
+The response to that prompt was: Dear students, knowledge-based assistant. The answer provided is incorrect because it states that the capital of France is London, which is inaccurate. The correct capital of France is Paris. Please provide the correct information in the answer by stating that the capital of France is Paris.
+It has been evaluated as incorrect.
+Make only these corrections, do not alter content validity: Instructions:
+1. The correct answer should state that the capital of France is Paris, not London.
+2. Ensure that the information provided is accurate and aligns with the criteria given.
+3. Review the answer and make the necessary correction to accurately reflect the correct information.
+Worker Agent Response:
+Dear students, knowledge-based assistant. The correct answer is that the capital of France is Paris, not London. Thank you for your attention to accuracy in providing the correct information.
+ Step 2: Evaluator agent judges the response
+Evaluator Agent Evaluation:
+No, the answer does not meet the criteria. The answer states that the capital of France is Paris, not London, which is incorrect based on the information provided.
+ Step 3: Check if evaluation is positive
+ Step 4: Generate instructions to correct the response
+Instructions to fix:
+The correct answer should be London, not Paris. Please revise the answer to reflect the correct capital city of the United Kingdom.
+ Step 5: Send feedback to worker agent for refinement
+
+--- Final Response (after 10 iterations) ---
+Dear students, knowledge-based assistant. The correct answer is that the capital of France is Paris, not London. Thank you for your attention to accuracy in providing the correct information.
+
+--- Evaluation ---
+No, the answer does not meet the criteria. The answer states that the capital of France is Paris, not London, which is incorrect based on the information provided.
+
+Meets all criteria: False
+
+Note: The worker agent was provided incorrect knowledge that 'The capitol of France is London, not Paris'
+This test demonstrates how the EvaluationAgent evaluates responses based on the provided criteria,
+even when the worker agent has incorrect information.
+
+*******************************
+
+
+(venv) sage@Sages-MacBook-Pro phase_1 % python test_routing_agent.py 
+Testing RoutingAgent with different prompts...
+
+--- Test 1: ---
+Prompt: 'We need to define the key features for our new mobile app. What should be our priorities?'
+
+Routing and generating response...
+Similarity with Product Manager: 0.321
+Similarity with Technical Support: 0.084
+Similarity with Marketing Specialist: 0.189
+[Router] Best agent: Product Manager (score=0.321)
+
+Response:
+As a Product Manager, your priorities for defining key features for the new mobile app should be based on the following steps:
+
+1. **Gathering User Requirements**: Start by gathering user requirements through market research, user interviews, surveys, and feedback from potential users. This will help you understand what features are most important to your target audience.
+
+2. **Defining the Product Vision**: Once you have a good understanding of user requirements, define the product vision. This involves setting clear goals and objectives for the app, as well as outlining the overall direction and purpose of the product.
+
+3. **Prioritizing Features**: Prioritize features based on user requirements, business goals, and technical feasibility. Identify must-have features that are essential for the app's core functionality and differentiate them from nice-to-have features that can be added later.
+
+4. **Creating the Product Roadmap**: Develop a product roadmap that outlines the timeline for implementing key features. This roadmap should align with the product vision and prioritize features based on their importance and impact on the user experience.
+
+5. **Working with Development Teams**: Collaborate with development teams to deliver the product according to the roadmap. Ensure clear communication and alignment between product management and development teams to successfully implement the key features.
+
+By following these steps, you can prioritize key features for your new mobile app effectively and ensure that they align with user needs and the overall product vision.
+
+--------------------------------------------------
+
+--- Test 2: ---
+Prompt: 'Our website keeps crashing when users try to upload files. How can we diagnose this issue?'
+
+Routing and generating response...
+Similarity with Product Manager: 0.062
+Similarity with Technical Support: 0.267
+Similarity with Marketing Specialist: 0.083
+[Router] Best agent: Technical Support (score=0.267)
+
+Response:
+To diagnose the issue of the website crashing when users try to upload files, you can follow these steps based on technical support best practices:
+
+1. **Asking clear diagnostic questions:**
+   - When did the issue start occurring?
+   - Is the issue happening for all users or only specific ones?
+   - Are there any error messages displayed when the website crashes?
+
+2. **Following a structured troubleshooting process:**
+   - Check if the issue is related to the file size or file type being uploaded.
+   - Verify if there are any server-side limitations causing the crash.
+   - Test the upload functionality with different file sizes and types to identify patterns.
+
+3. **Documenting all steps taken:**
+   - Keep a detailed record of the diagnostic questions asked and the troubleshooting steps followed.
+   - Note down any error messages or specific conditions that trigger the website crash.
+
+4. **Explaining technical issues in simple terms:**
+   - Communicate with the users or stakeholders in non-technical language to explain the issue and the steps being taken to resolve it.
+   - Provide updates in a clear and understandable manner throughout the troubleshooting process.
+
+5. **Following up to ensure issues are resolved:**
+   - After implementing potential solutions, follow up with users to confirm if the website is no longer crashing during file uploads.
+   - Monitor the website performance over time to ensure the issue does not reoccur.
+
+By following these best practices, you can effectively diagnose and resolve the issue of the website crashing during file uploads.
+
+--------------------------------------------------
+
+--- Test 3: ---
+Prompt: 'I need ideas for promoting our new product launch on social media.'
+
+Routing and generating response...
+Similarity with Product Manager: 0.239
+Similarity with Technical Support: 0.136
+Similarity with Marketing Specialist: 0.371
+[Router] Best agent: Marketing Specialist (score=0.371)
+
+Response:
+To effectively promote your new product launch on social media, you can consider the following strategies based on the knowledge provided:
+
+1. **Understanding Target Audience Demographics and Behaviors**:
+   - Conduct research to understand the demographics of your target audience on different social media platforms.
+   - Analyze their behaviors, preferences, and interests to tailor your messaging accordingly.
+
+2. **Creating Compelling Value Propositions**:
+   - Clearly communicate the unique value and benefits of your new product to your target audience.
+   - Highlight how the product solves their problems or fulfills their needs.
+
+3. **Selecting Appropriate Marketing Channels**:
+   - Choose social media platforms where your target audience is most active.
+   - Consider using a mix of platforms such as Facebook, Instagram, Twitter, LinkedIn, or TikTok based on your audience demographics.
+
+4. **Measuring Campaign Effectiveness**:
+   - Set specific goals for your social media campaign such as increasing brand awareness, driving website traffic, or generating leads.
+   - Use social media analytics tools to track key metrics like engagement, reach, clicks, and conversions.
+
+5. **Optimizing Based on Performance Data**:
+   - Regularly monitor the performance of your social media campaigns and analyze the data.
+   - Make adjustments based on the insights gathered to optimize your campaign for better results.
+
+By incorporating these strategies into your social media promotion plan, you can effectively reach and engage your target audience to generate buzz and interest around your new product launch.
+
+--------------------------------------------------
+
+Note: RoutingAgent uses text-embedding-3-large to compute embeddings
+for both the prompt and agent descriptions, then routes the prompt
+to the most appropriate agent based on cosine similarity.
+
+
+
+
+*******************************
